@@ -2,7 +2,7 @@
 " Header: "{{{
 " Maintainer:	Michael Lee <michael.lee@zerustech.com>
 " Original Author: Andy Wokula <anwoku@yahoo.de>
-" Last Change:	2017 July 03
+" Last Change:	2017 July 05
 " Version:	2.0
 " Description:	Fix bugs
 "               Refactor code base
@@ -15,7 +15,7 @@
 "	indent/css.vim  (2012 May 30) from Nikolai Weibull
 "
 " History:
-" 2017 Jul 03   (v2.0) overhaul (Michael)
+" 2017 Jul 05   (v2.0) overhaul (Michael)
 " 2016 Mar 30   (v1.0) overhaul (Bram)
 " 2014 June	(v1.0) overhaul (Bram)
 " 2012 Oct 21	(v0.9) added support for shiftwidth()
