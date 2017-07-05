@@ -246,6 +246,16 @@ let b:cursor_stack = []
 " time, or restores local configuration after executing external scripts.
 func! s:RestoreLocalConfiguration()
   "{{{
+
+  " Disables text-wrap for normal text.
+  setlocal formatoptions-=t
+
+  " Enables text-wrap for comments.
+  setlocal formatoptions+=croql
+
+  " Due to issue https://github.com/vim/vim/issues/1696, the middle part of three-piece comments must NOT be blank.
+  setlocal comments=s1:<!--[,m:\ \ \ \ \,ex:]-->,s4:<!--,m://,ex:-->
+
   setlocal indentexpr=HtmlIndent()
   setlocal indentkeys=o,O,<Return>,<>>,{,},!^F
 
@@ -491,7 +501,7 @@ endfunc "}}}
 " @param tag_name The tag name.
 " @param tag_start_index The index of the start of the block tag.
 " @return The index of the block start bracket, or start of the block tag if
-"         it does not have a start bracket.
+" it does not have a start bracket.
 func! s:IndexOfBlockTagStartBracket(block_tag_line, tag_name, tag_start_index)
   "{{{
   let id = s:indent_tags[a:tag_name]
@@ -515,7 +525,7 @@ endfunc "}}}
 " @param tag_name The tag name.
 " @param tag_start_index The index of the start of the block tag.
 " @return The index of the block end bracket, or end of the block tag if it
-"         does not have an end bracket.
+" does not have an end bracket.
 func! s:IndexOfBlockTagEndBracket(block_tag_line, tag_name, tag_start_index)
   "{{{
   let id = s:indent_tags[a:tag_name]
@@ -601,7 +611,7 @@ endfunc "}}}
 " @param a:3 The bracket characters for start and end tags.
 " @param a:4 The bracket patterns for matching boundaries of start and end
 " @param a:5 The method for calculating indent of lines inside this block.
-"            tags.
+" tags.
 func! s:AddBlockTag(tag, id, ...)
   "{{{
   let start_tag = a:tag
@@ -693,7 +703,7 @@ endfunc "}}}
 "
 " @param start_tag The start tag.
 " @param a:1 A flag that indicates if \zs should be included in the pattern, 1
-"        by default.
+" by default.
 " @return The regex pattern.
 func! s:StartTagPattern(start_tag, ...)
   "{{{
@@ -723,7 +733,7 @@ endfunc "}}}
 "
 " @param end_tag The end tag.
 " @param a:1 A flag that indicates if \zs should be included in the pattern, 1
-"        by default.
+" by default.
 " @return The regex pattern.
 func! s:EndTagPattern(end_tag, ...)
   "{{{
@@ -841,7 +851,7 @@ endfunc "}}}
 " accordingly.
 " @param text The line to be checked.
 " @param root_block The id of the block, inside which, the string is being
-"        checked, 0 by default (not inside any block).
+" checked, 0 by default (not inside any block).
 func! s:CountITags(text, root_block)
   "{{{
   let b:tag_counter.root_block = a:root_block
@@ -863,7 +873,6 @@ endfunc "}}}
 " Checks a single tag and upates the values of
 " b:tag_counter.current_line_offset and b:tag_counter.next_line_offset
 " accordingly. Used by s:CountITags().
-"
 " @param tag The tag to be checked.
 " @return 1 if the tag has been checked, or 0 otherwise.
 func! s:CheckTag(tag)
@@ -1198,12 +1207,12 @@ endfunc "}}}
 "
 " @param context Current context.
 " @param current_block_start_tag_line The line of the start tag of the block
-"        that contains current line.
+" that contains current line.
 " @param current_block_start_tag The start tag of the block that contains
-"        current line.
+" current line.
 " @param current_block_start_tag_lnum The line number of the block start tag.
 " @param current_block_start_tag_start_col The start column number of the
-"        block start tag.
+" block start tag.
 " @return The initialized context
 func! s:InitContextOfLineInsideBlock(context, current_block_start_tag_line, current_block_start_tag, current_block_start_tag_lnum, current_block_start_tag_start_col)
   "{{{
