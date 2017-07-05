@@ -6,7 +6,9 @@ Vim Scripts for HTML. Currently, this repository only contains a refactored
 indent script, based on the [work of Andy Wokula][2].
 
 ::: info-box note
+
 This project only works with vim8.0 or later version.
+
 :::
 
 Improvements
