@@ -15,7 +15,10 @@ Improvements
 ------------
 1. Fixed some bugs
 1. Refactored almost everything
-1. Reuse indent/css.vim for indenting css inside `<style>...</style>` block.
+1. Reuse indent/css.vim for indenting CSS code inside `<style>...</style>`
+   block.
+1. Reuse indent/javascript.vim for indenting JavaScript code inside
+   `<script>...</script>` block.
 1. Support custom block tags and indent methods, so that it can be extended to
    support other templating systems, such as twig.
 1. Added detailed comments.
