@@ -11,7 +11,7 @@ setlocal formatoptions-=t
 setlocal formatoptions+=croql
 
 " Due to issue https://github.com/vim/vim/issues/1696, the middle part of three-piece comments must NOT be blank.
-setlocal comments=s1:<!--[,m:\ \ \ \ ,ex:]-->,s4:<!--,m://,ex:-->
+setlocal comments=s1:<!--[,m:\ \ \ \ ,ex:]-->,s1:<!--,m://,ex:-->
 
 " Restore the saved compatibility options.
 let &cpo = s:save_cpo
