@@ -2708,7 +2708,7 @@ Given (Fixtures of s:InitContext()):
        style="color: red;
        border: 1px solid #ff0000;"></div>
   <div><script>
-      var i = 1;
+          var i = 1;
       </script></div>
   <div><div>
           <div></div>
@@ -2740,14 +2740,13 @@ Execute (s:InitContext()):
   " ^ <- cursor
   let v:lnum = 3
   call cursor(3, 1)
-  runtime! syntax/html.vim
+  unlet b:current_syntax | runtime! syntax/html.vim
   let expected = {'lnum': 2, 'indent_inside_block': -1, 'script_type': '',
                  \'indent': 5, 'ready': 1, 'state': 'line_inside_attribute',
                  \'root_block': 0, 'changed_tick': 0, 'block_start_tag_lnum': 0,
                  \'block': 0}
   Assert expected == HtmlIndentCall(method, [3])
   Assert [3, 6] == [line('.'), col('.')]
-  unlet b:current_syntax
 
   " Current line is inside a tag
   " ----------------------------
@@ -2762,14 +2761,13 @@ Execute (s:InitContext()):
   let context.ready = 0
   let context.indent = 4
   call HtmlIndentSet('b:context', context)
-  runtime! syntax/html.vim
+  unlet b:current_syntax | runtime! syntax/html.vim
   let expected = {'lnum': 1, 'indent_inside_block': -1, 'script_type': '',
                  \'indent': 4, 'ready': 1, 'state': 'line_inside_tag',
                  \'root_block': 0, 'changed_tick': 0, 'block_start_tag_lnum': 0,
                  \'block': 0}
   Assert expected == HtmlIndentCall(method, [2])
   Assert [2, 6] == [line('.'), col('.')]
-  unlet b:current_syntax
 
   " Current line is inside a block
   " -----------------------------------
@@ -2887,57 +2885,49 @@ Execute (s:Alien3()):
   call HtmlIndentSet('b:indent_ready', 0)
   call cursor(2, 1)
   let v:lnum = 2
-  Assert 4 == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
-  Assert [2, 1] == [line('.'), col('.')]
 
   " /* comment two */
   call HtmlIndentSet('b:indent_ready', 0)
-  call cursor(3, 1)
   let v:lnum = 3
-  Assert 4 == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
-  Assert [3, 1] == [line('.'), col('.')]
 
   " /*
   call HtmlIndentSet('b:indent_ready', 0)
   call cursor(4, 1)
   let v:lnum = 4
-  Assert 4 == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
-  Assert [4, 1] == [line('.'), col('.')]
 
   " comment three
   call HtmlIndentSet('b:indent_ready', 0)
   call cursor(5, 1)
   let v:lnum = 5
-  Assert cindent(v:lnum) == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
-  Assert [5, 1] == [line('.'), col('.')]
 
   " */
   call HtmlIndentSet('b:indent_ready', 0)
   call cursor(6, 1)
   let v:lnum = 6
-  Assert cindent(v:lnum) == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
-  Assert [6, 1] == [line('.'), col('.')]
 
   " var i = 'hello';
   call HtmlIndentSet('b:indent_ready', 0)
   call cursor(7, 1)
   let v:lnum = 7
-  Assert 4 == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
-  Assert [7, 1] == [line('.'), col('.')]
 
   " alert(i);
   call HtmlIndentSet('b:indent_ready', 0)
   call cursor(9, 1)
   let v:lnum = 9
-  Assert cindent(v:lnum) == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
-  Assert [9, 1] == [line('.'), col('.')]
 
 Given (Fixtures of s:Alien4()):
   <style>
@@ -2946,8 +2936,8 @@ Given (Fixtures of s:Alien4()):
        * comment two
        */
       .container {
-         color: red;
-         border: 1px solid #ff0000;
+          color: red;
+          border: 1px solid #ff0000;
       }
   </style>
 
@@ -2988,7 +2978,7 @@ Execute (s:Alien4()):
   call HtmlIndentSet('b:indent_ready', 0)
   call cursor(5, 1)
   let v:lnum = 5
-  Assert cindent(v:lnum) == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
   Assert [5, 1] == [line('.'), col('.')]
 
@@ -3004,7 +2994,7 @@ Execute (s:Alien4()):
   call HtmlIndentSet('b:indent_ready', 0)
   call cursor(7, 1)
   let v:lnum = 7
-  Assert cindent(v:lnum) == HtmlIndentCall(method, [])
+  Assert indent(v:lnum) == HtmlIndentCall(method, [])
   Assert 1 == HtmlIndentGet('b:indent_ready')
   Assert [7, 1] == [line('.'), col('.')]
 
