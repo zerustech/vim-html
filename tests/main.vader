@@ -3216,6 +3216,7 @@ Execute (s:IndentOfLineInsideBlock()):
   let context.block = 3
   let context.indent_inside_block = 0
   let context.block_start_tag_lnum = 1
+  let context.script_type = 'javascript'
   let v:lnum = 2
   call HtmlIndentSet('b:context', context)
   Assert 4 == HtmlIndentCall(method, [])
